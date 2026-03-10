@@ -10,13 +10,16 @@ const CONFIG_API_URL = `${API_URL}/config/invitation`
 
 // Helper to normalize URLs (ensure they use the API domain if relative)
 export const normalizeUrl = (url?: string) => {
-  if (!url) return ''
+  if (!url || url === '') return undefined
   if (url.startsWith('http') || url.startsWith('data:')) return url
   
+  // Only auto-prefix if it looks like an upload path from the backend
+  if (!url.startsWith('/uploads/')) return url
+
   // Extract base origin from API_URL (e.g. https://api.onrender.com from https://api.onrender.com/api/v1)
   try {
     const urlObj = new URL(API_URL, window.location.origin)
-    return `${urlObj.origin}${url.startsWith('/') ? '' : '/'}${url}`
+    return `${urlObj.origin}${url}`
   } catch {
     return url
   }
@@ -73,7 +76,7 @@ interface DesignState {
   sendToBack: (id: string) => void
   bringForward: (id: string) => void
   sendBackward: (id: string) => void
-  uploadFile: (file: File) => Promise<string | null>
+  uploadFile: (file: File) => Promise<string | null | undefined>
 }
 
 export const useDesignStore = create<DesignState>((set, get) => ({

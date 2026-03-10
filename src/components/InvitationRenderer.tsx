@@ -93,11 +93,13 @@ export function InvitationRenderer({ config, guest, onElementClick, selectedId, 
                         transform: `rotate(${el.rotation || 0}deg)`
                     }}
                 >
-                    <img 
-                        src={normalizeUrl(el.content)} 
-                        alt="element" 
-                        className="w-full h-full object-cover pointer-events-none" 
-                    />
+                    {normalizeUrl(el.content) && (
+                        <img 
+                            src={normalizeUrl(el.content)} 
+                            alt="element" 
+                            className="w-full h-full object-cover pointer-events-none" 
+                        />
+                    )}
                 </div>
             )
         }

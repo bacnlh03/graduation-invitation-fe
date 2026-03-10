@@ -817,7 +817,13 @@ export function DesignerPage() {
                         }}
                     >
                         {el.type === 'dynamic' && el.field === 'full_name' ? '{Tên Khách Mời}' : (
-                            el.type === 'image' ? <img src={normalizeUrl(el.content)} className="w-full h-full object-cover pointer-events-none" /> : el.content
+                            el.type === 'image' ? (
+                                normalizeUrl(el.content) ? (
+                                    <img src={normalizeUrl(el.content)} className="w-full h-full object-cover pointer-events-none" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-slate-100 text-[10px] text-slate-400">No Image</div>
+                                )
+                            ) : el.content
                         )}
                     </div>
                  ))}
