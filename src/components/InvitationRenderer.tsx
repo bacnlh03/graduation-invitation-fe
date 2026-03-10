@@ -1,5 +1,6 @@
 import type { DesignConfig, DesignElement } from '@/types/design'
 import type { Guest } from '@/types'
+import { normalizeUrl } from '@/stores/useDesignStore'
 import clsx from 'clsx'
 
 interface Props {
@@ -33,7 +34,7 @@ export function InvitationRenderer({ config, guest, onElementClick, selectedId, 
         width: config.width,
         height: config.height,
         backgroundColor: config.background.color,
-        backgroundImage: config.background.image ? `url(${config.background.image})` : undefined,
+        backgroundImage: config.background.image ? `url(${normalizeUrl(config.background.image)})` : undefined,
         transform: `scale(${scale})`,
         transformOrigin: 'top left'
       }}
@@ -93,7 +94,7 @@ export function InvitationRenderer({ config, guest, onElementClick, selectedId, 
                     }}
                 >
                     <img 
-                        src={el.content} 
+                        src={normalizeUrl(el.content)} 
                         alt="element" 
                         className="w-full h-full object-cover pointer-events-none" 
                     />

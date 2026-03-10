@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDesignStore } from '@/stores/useDesignStore'
+import { useDesignStore, normalizeUrl } from '@/stores/useDesignStore'
 import { Type, Save, GraduationCap, AlignHorizontalJustifyCenter, AlignVerticalJustifyCenter, Undo, Redo, Layers, ArrowUp, RotateCw, Smile, Eye, X, Music, Volume2 } from 'lucide-react'
 import clsx from 'clsx'
 
@@ -770,7 +770,7 @@ export function DesignerPage() {
                 className="w-full h-full relative overflow-hidden bg-white"
                 style={{
                     backgroundColor: config.background.color,
-                    backgroundImage: config.background.image ? `url(${config.background.image})` : undefined,
+                    backgroundImage: config.background.image ? `url(${normalizeUrl(config.background.image)})` : undefined,
                 }}
                 onClick={() => selectElement(null)}
              >
@@ -817,7 +817,7 @@ export function DesignerPage() {
                         }}
                     >
                         {el.type === 'dynamic' && el.field === 'full_name' ? '{Tên Khách Mời}' : (
-                            el.type === 'image' ? <img src={el.content} className="w-full h-full object-cover pointer-events-none" /> : el.content
+                            el.type === 'image' ? <img src={normalizeUrl(el.content)} className="w-full h-full object-cover pointer-events-none" /> : el.content
                         )}
                     </div>
                  ))}

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import confetti from 'canvas-confetti'
 import { useGuestStore } from '@/stores/useGuestStore'
-import { useDesignStore } from '@/stores/useDesignStore'
+import { useDesignStore, normalizeUrl } from '@/stores/useDesignStore'
 import { InvitationRenderer } from '@/components/InvitationRenderer'
 import { useSearchParams } from 'react-router-dom'
 import clsx from 'clsx'
@@ -273,7 +273,7 @@ function BookCoverReveal({ scale, onOpen }: { scale: number, onOpen: () => void 
                 
                 {/* Sagittarius Image */}
                 <img 
-                    src="/sagittarius.png" 
+                    src={normalizeUrl("/sagittarius.png")} 
                     alt="Sagittarius" 
                     className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
                     style={{ mixBlendMode: 'luminosity' }}
@@ -307,7 +307,7 @@ function BookCoverReveal({ scale, onOpen }: { scale: number, onOpen: () => void 
 
                 {/* Graduation Image */}
                 <img 
-                    src="/graduation.png" 
+                    src={normalizeUrl("/graduation.png")} 
                     alt="Graduation" 
                     className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
                     style={{ mixBlendMode: 'luminosity' }}

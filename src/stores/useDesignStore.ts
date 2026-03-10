@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
 const CONFIG_API_URL = `${API_URL}/config/invitation`
 
 // Helper to normalize URLs (ensure they use the API domain if relative)
-const normalizeUrl = (url?: string) => {
+export const normalizeUrl = (url?: string) => {
   if (!url) return ''
   if (url.startsWith('http') || url.startsWith('data:')) return url
   
