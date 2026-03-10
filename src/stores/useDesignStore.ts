@@ -8,6 +8,20 @@ import { useAuthStore } from '@/stores/useAuthStore'
 const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
 const CONFIG_API_URL = `${API_URL}/config/invitation`
 
+// Helper to normalize URLs (ensure they use the API domain if relative)
+const normalizeUrl = (url?: string) => {
+  if (!url) return ''
+  if (url.startsWith('http') || url.startsWith('data:')) return url
+  
+  // Extract base origin from API_URL (e.g. https://api.onrender.com from https://api.onrender.com/api/v1)
+  try {
+    const urlObj = new URL(API_URL, window.location.origin)
+    return `${urlObj.origin}${url.startsWith('/') ? '' : '/'}${url}`
+  } catch {
+    return url
+  }
+}
+
 async function authFetch(input: string, init?: RequestInit): Promise<Response> {
   const token = useAuthStore.getState().token
   const headers: HeadersInit = {
@@ -76,6 +90,17 @@ export const useDesignStore = create<DesignState>((set, get) => ({
         const data = await res.json()
         // If data is empty object, use default
         if (data && Object.keys(data).length > 0) {
+            // Normalize URLs in config
+            if (data.music?.url) data.music.url = normalizeUrl(data.music.url)
+            if (data.background?.image) data.background.image = normalizeUrl(data.background.image)
+            if (data.elements) {
+              data.elements = data.elements.map((el: DesignElement) => {
+                if (el.type === 'image' && el.content) {
+                  return { ...el, content: normalizeUrl(el.content) }
+                }
+                return el
+              })
+            }
             set({ config: data })
         } else {
             console.log('No config found, using default')
@@ -330,7 +355,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
       
       if (res.ok) {
         const data = await res.json()
-        return data.url
+        return normalizeUrl(data.url)
       }
     } catch (err) {
       console.error('Upload failed:', err)
