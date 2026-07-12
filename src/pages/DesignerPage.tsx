@@ -540,6 +540,34 @@ export function DesignerPage() {
                                                         <textarea className="w-full border border-slate-200 rounded-lg p-2.5 text-sm min-h-[80px] focus:ring-2 focus:ring-indigo-500/10 outline-none transition-all" value={el.content || ''} onChange={(e) => updateElement(el.id, { content: e.target.value })} />
                                                     </div>
                                                 )}
+                                                {el.type === 'text' && (
+                                                    <div>
+                                                        <label className="block text-[10px] text-slate-400 font-bold uppercase mb-1">Tọa độ bản đồ (tùy chọn)</label>
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <input
+                                                                type="number"
+                                                                step="any"
+                                                                className="w-full border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500/10 outline-none transition-all"
+                                                                placeholder="Lat"
+                                                                value={el.mapLat ?? ''}
+                                                                onChange={(e) => updateElement(el.id, {
+                                                                    mapLat: e.target.value ? parseFloat(e.target.value) : undefined,
+                                                                })}
+                                                            />
+                                                            <input
+                                                                type="number"
+                                                                step="any"
+                                                                className="w-full border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500/10 outline-none transition-all"
+                                                                placeholder="Lng"
+                                                                value={el.mapLng ?? ''}
+                                                                onChange={(e) => updateElement(el.id, {
+                                                                    mapLng: e.target.value ? parseFloat(e.target.value) : undefined,
+                                                                })}
+                                                            />
+                                                        </div>
+                                                        <p className="text-[10px] text-slate-400 mt-1">Khách mời có thể bấm vào địa chỉ để xem bản đồ</p>
+                                                    </div>
+                                                )}
                                                 <div className="grid grid-cols-2 gap-2">
                                                     <div>
                                                         <label className="block text-[10px] text-slate-400 font-bold uppercase mb-1">Cỡ chữ</label>

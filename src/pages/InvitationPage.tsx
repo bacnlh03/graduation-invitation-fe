@@ -41,7 +41,7 @@ export function InvitationPage() {
   useEffect(() => {
     if (config.music?.enabled && config.music.url && !audioRef.current) {
       audioRef.current = new Audio(config.music.url)
-      audioRef.current.loop = true
+      audioRef.current.loop = false
     }
   }, [config.music])
 
